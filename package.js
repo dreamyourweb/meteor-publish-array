@@ -1,5 +1,5 @@
 Package.describe({
-  name: "orikami:publish-array",
+  name: "logmaor:publish-array",
   version: "0.0.1",
   summary: "Publish any array to the client",
   git: "https://github.com/dreamyourweb/meteor-publish-array.git",
