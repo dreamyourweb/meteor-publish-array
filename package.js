@@ -2,7 +2,7 @@ Package.describe({
   name: "orikami:publish-array",
   version: "0.0.1",
   summary: "Publish any array to the client",
-  git: "",
+  git: "https://github.com/dreamyourweb/meteor-publish-array.git",
   documentation: "README.md"
 });
 
