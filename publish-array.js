@@ -39,6 +39,7 @@ Meteor.publishArray = (name, collection, options, func) => {
             pub.ready();
         };
 
+        refresh();
         intervalHandle = Meteor.setInterval(() => {
             refresh();
         }, interval);
