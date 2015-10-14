@@ -1,6 +1,16 @@
-Meteor.publishArray = (name, collection, options, func) => {
-    let {interval: interval = 10000, idField: idField = "_id"} = options;
+Meteor.publishArray = function(name, collection, options, func) {
+    let {interval: interval = 10000, idField: idField = "_id", refreshHandle} = options;
     let intervalHandle;
+
+    let subscriptions = {};
+
+    if (_.isObject(refreshHandle)) {
+        refreshHandle.refresh = function() {
+            _.each(subscriptions, function(sub, id) {
+                sub.refresh();
+            });
+        };
+    }
 
     return Meteor.publish(name, function(params) {
         let pub = this;
@@ -39,6 +49,10 @@ Meteor.publishArray = (name, collection, options, func) => {
             pub.ready();
         };
 
+        subscriptions[pub._subscriptionId] = {
+            refresh: refresh
+        };
+
         refresh();
         intervalHandle = Meteor.setInterval(() => {
             refresh();
@@ -46,6 +60,7 @@ Meteor.publishArray = (name, collection, options, func) => {
 
         this.onStop = () => {
             Meteor.clearInterval(intervalHandle);
+            delete subscriptions[pub._subscriptionId];
             return true;
         };
 
