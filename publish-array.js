@@ -31,7 +31,7 @@ Meteor.publishArray = (name, collection, options, func) => {
                 ids.forEach(id => {
                     if (!currentIds.has(id)) {
                         pub.removed(collection, id);
-                        ids.remove(id);
+                        ids.delete(id);
                     }
                 });
             }
